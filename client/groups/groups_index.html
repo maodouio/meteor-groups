@@ -1,0 +1,31 @@
+<template name="groupsIndex">
+  <h1>groupsIndex</h1>
+  <div class="cell">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ownerId</th>
+          <th>memberIds</th>
+          <th>Created</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each groups}}
+        <tr>
+          <td><a href="{{pathFor 'groupShow'}}">{{ownerId}}</a></td>
+          <td>{{memberIds}}</td>
+          <td>{{showPrettyTimestamp createdAt}}</td>
+          <td>{{showTimeAgo updatedAt}}</td>
+          <td>
+            <a class="btn btn-xs btn-default" href="{{pathFor 'groupShow'}}" role="button">Edit</a>
+            <a class="btn btn-xs btn-danger delete-post" href="#" role="button">Delete</a>
+            </td>
+        </tr>
+        {{else}}
+        No groups
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
