@@ -1,6 +1,7 @@
 Meteor.methods({
-  createGroup: function(ownerId, groupName) {
-    console.log("createGroup function running...", ownerId);
+  createGroup: function(groupName) {
+    ownerId = Meteor.userId();
+    console.log("createGroup function running, ownerId =", ownerId);
 
     var arrMember = [];
 
@@ -13,20 +14,21 @@ Meteor.methods({
 
     return groupId;
   },
-  joinGroup: function(userId, groupId) {
+  joinGroup: function(groupId) {
+    userId = Meteor.userId();
     console.log("joinGroup is running...");
 
     // 判断群组是否存在
     var result = Groups.findOne({_id: groupId});
     if (!result) {
-      console.log("GroupId is not exists:", groupId);
+      console.log("GroupId is not exists, groupId =", groupId);
       return false;
     }
 
     // 判断是否已经加入过群组
     for (var i = 0; i < result.memberIds.length; i++) {
       if (result.memberIds[i] == userId) {
-        console.log("userId already exists:", userId);
+        console.log("userId already exists, userId =", userId);
         return false;
       }
     }
@@ -39,9 +41,10 @@ Meteor.methods({
 
     // 更新数据库
     Groups.update(result._id, {$set:{memberIds: arrMember}});
-    console.log("Add User in Group:", userId);
+    console.log("Add User in Group, userId =", userId);
   },
-  leaveGroup: function(userId, groupId) {
+  leaveGroup: function(groupId) {
+    userId = Meteor.userId();
     console.log("leaveGroup is runnning...");
 
     // 判断群组id是否存在

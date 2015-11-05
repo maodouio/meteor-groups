@@ -5,6 +5,7 @@
       <thead>
         <tr>
           <th>ownerId</th>
+          <th>groupName</th>
           <th>memberIds</th>
           <th>Created</th>
           <th>Updated</th>
@@ -14,6 +15,7 @@
         {{#each groups}}
         <tr>
           <td><a href="{{pathFor 'groupShow'}}">{{ownerId}}</a></td>
+          <td>{{groupName}}</td>
           <td>{{memberIds}}</td>
           <td>{{showPrettyTimestamp createdAt}}</td>
           <td>{{showTimeAgo updatedAt}}</td>

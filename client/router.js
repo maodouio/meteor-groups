@@ -5,9 +5,9 @@
 Router.map(function() {
   this.route('groupsIndex', {
     template: 'groupsIndex',
-    path: '/groups',
+    path: '/userGroups/:_id',
     waitOn: function () {
-      return Meteor.subscribe('groups');
+      return Meteor.subscribe('groups', this.params._id);
     },
     data: {
       groups: function () {
