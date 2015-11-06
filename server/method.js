@@ -1,6 +1,5 @@
 Meteor.methods({
-  createGroup: function(groupName) {
-    ownerId = Meteor.userId();
+  createGroup: function(ownerId, groupName) {
     console.log("createGroup function running, ownerId =", ownerId);
 
     var arrMember = [];
@@ -14,8 +13,7 @@ Meteor.methods({
 
     return groupId;
   },
-  joinGroup: function(groupId) {
-    userId = Meteor.userId();
+  joinGroup: function(userId, groupId) {
     console.log("joinGroup is running...");
 
     // 判断群组是否存在
@@ -43,8 +41,7 @@ Meteor.methods({
     Groups.update(result._id, {$set:{memberIds: arrMember}});
     console.log("Add User in Group, userId =", userId);
   },
-  leaveGroup: function(groupId) {
-    userId = Meteor.userId();
+  leaveGroup: function(userId, groupId) {
     console.log("leaveGroup is runnning...");
 
     // 判断群组id是否存在

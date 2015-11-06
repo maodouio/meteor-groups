@@ -1,6 +1,6 @@
 Package.describe({
   name: 'maodouio:groups',
-  version: '0.0.4',
+  version: '0.0.5',
   // Brief, one-line summary of the package.
   summary: 'microduino groups package',
   // URL to the Git repository containing the source code for this package.
