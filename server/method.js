@@ -21,7 +21,9 @@ Meteor.methods({
   joinGroup: function(groupId) {
     console.log("joinGroup is running...");
     var userId = Meteor.userId();
-
+    if (!userId) {
+      return false;
+    }
     // 判断群组是否存在
     var result = Groups.findOne({_id: groupId});
     if (!result) {
