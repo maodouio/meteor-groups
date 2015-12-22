@@ -4,10 +4,11 @@
 
 Router.map(function() {
   this.route('groupsIndex', {
+    controller: ShopController,
     template: 'groupsIndex',
-    path: '/userGroups/:_id',
+    path: '/groups',
     waitOn: function () {
-      return Meteor.subscribe('groups', this.params._id);
+      return Meteor.subscribe('groups');
     },
     data: {
       groups: function () {
@@ -17,6 +18,7 @@ Router.map(function() {
   });
 
   this.route('groupShow', {
+    controller: ShopController,
     template: 'groupShow',
     path: '/groups/:_id',
     waitOn: function () {
