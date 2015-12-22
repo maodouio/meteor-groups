@@ -1,7 +1,7 @@
 // FRIENDS INDEX
 // -------------------------------------------------------
-Meteor.publish('groups', function(userId) {
-  return Groups.find({memberIds: {$in: [userId]}});
+Meteor.publish('groups', function() {
+  return Groups.find({memberIds: {$in: [this.userId]}});
 });
 
 // FRIEND SHOW
