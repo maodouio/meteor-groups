@@ -28,4 +28,16 @@ Router.map(function() {
       return Groups.findOne(this.params._id);
     }
   });
+
+  this.route('groupNew', {
+    controller: ShopController,
+    template: 'groupNew',
+    path: '/groupNew',
+    waitOn: function () {
+      return Meteor.subscribe('allGroups');
+    },
+    data: function () {
+      return Groups.find();
+    }
+  });
 });
