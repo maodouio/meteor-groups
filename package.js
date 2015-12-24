@@ -24,7 +24,6 @@ Package.onUse(function(api) {
 
   api.addFiles('client/router.js', 'client');
   api.addFiles('client/groups/groups_index.html', 'client');
-  api.addFiles('client/groups/group_show.html', 'client');
 
   api.addFiles('lib/collection.js');
 
