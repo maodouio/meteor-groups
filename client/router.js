@@ -29,6 +29,7 @@ Router.map(function() {
     }
   });
 
+  //加入group
   this.route('groupNew', {
     controller: ShopController,
     template: 'groupNew',
@@ -39,5 +40,11 @@ Router.map(function() {
     data: function () {
       return Groups.find();
     }
+  });
+
+  this.route('groupCreate', {
+    controller: ShopController,
+    template: 'groupCreate',
+    path: '/groupCreate'
   });
 });
