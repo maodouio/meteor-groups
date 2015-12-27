@@ -15,3 +15,10 @@ Meteor.publish('group', function(groupId) {
 Meteor.publish('allGroups', function() {
   return Groups.find();
 });
+// GROUP AVATAR
+// -------------------------------------------------------
+Meteor.publish('groupAvatarId', function(id) {
+  check(id, String);
+  var Media = ReactionCore.Collections.Media;
+  return Media.find({"metadata.groupAvatarId": id});
+});
