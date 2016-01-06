@@ -61,6 +61,7 @@ Meteor.methods({
     }
     if (result.ownerId === userId) {
       console.log("You can't leave this group you are owner:", groupId);
+      throw new Meteor.Error(403, 'You can\'t leave this group because you are owner');
       return false;
     } else {
       // 遍历数组删除用户
