@@ -20,6 +20,7 @@ Package.onUse(function(api) {
   api.use('minimongo@1.0.10', 'client');
   api.use('mongo-livedata@1.0.9', 'client');
   api.use('templating@1.1.4', 'client');
+  api.use("reactioncommerce:core@0.9.4");
 
   api.addFiles('client/router.js', 'client');
   api.addFiles('client/groups/groups_index.html', 'client');
