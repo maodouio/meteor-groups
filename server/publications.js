@@ -22,3 +22,9 @@ Meteor.publish('groupAvatarId', function(id) {
   var Media = ReactionCore.Collections.Media;
   return Media.find({"metadata.groupAvatarId": id});
 });
+// ALL GROUPS AVATAR
+// -------------------------------------------------------
+Meteor.publish('groupsMedia', function() {
+  var Media = ReactionCore.Collections.Media;
+  return Media.find({"metadata.groupAvatarId": {$exists: true}});
+});
