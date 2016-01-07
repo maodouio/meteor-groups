@@ -19,63 +19,66 @@ Meteor.methods({
     return groupId;
   },
   joinGroup: function(groupId) {
-    console.log("joinGroup is running...");
+    check(groupId, String);
+
     var userId = Meteor.userId();
     if (!userId) {
       return false;
     }
-    // 判断群组是否存在
+
     var result = Groups.findOne({_id: groupId});
     if (!result) {
-      console.log("GroupId is not exists, groupId =", groupId);
       return false;
     }
 
-    // 判断是否已经加入过群组
     for (var i = 0; i < result.memberIds.length; i++) {
       if (result.memberIds[i] == userId) {
-        console.log("userId already exists, userId =", userId);
         return false;
       }
     }
 
-    // 将成员加入数组
+    // join group
     var arrMember = result.memberIds;
-    console.log("Group Member Array Info:", arrMember);
     arrMember.push(userId);
-    console.log("Push User to Group MemberIds", arrMember);
 
-    // 更新数据库
-    Groups.update(result._id, {$set:{memberIds: arrMember}});
-    console.log("Add User in Group, userId =", userId);
+    // membersCount
+    var membersCount = result.membersCount || 0
+
+    // update
+    return Groups.update(
+      result._id, {
+        $set: {
+          memberIds: arrMember,
+          membersCount: membersCount + 1
+        }
+      }
+    );
   },
   leaveGroup: function(groupId) {
-    console.log("leaveGroup is runnning...");
+    check(groupId, String);
     var userId = Meteor.userId();
 
-    // 判断群组id是否存在
     var result = Groups.findOne({_id: groupId});
     if (!result) {
-      console.log("GroupId is not exists:", groupId);
       return false;
     }
     if (result.ownerId === userId) {
-      console.log("You can't leave this group you are owner:", groupId);
       throw new Meteor.Error(403, 'You can\'t leave this group because you are owner');
       return false;
     } else {
-      // 遍历数组删除用户
+      // delete user
       var arrMember = result.memberIds;
-      console.log("Group Member Array Info:", arrMember);
+      var memberCount = result.memberCount;
+
       for (var i = 0; i < arrMember.length; i++) {
         if (arrMember[i] == userId) {
           arrMember.splice(i, 1);
-          console.log("Delete value:", i, arrMember[i]);
+          memberCount = memberCount - 1;
         }
       }
+
       // update
-      Groups.update(result._id, {$set:{memberIds: arrMember}});
-      console.log("pop user from Group", userId, groupId);
+      return Groups.update(result._id, {$set:{memberIds: arrMember, memberCount: memberCount}});
     }
 
   },
