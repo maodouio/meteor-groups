@@ -2,9 +2,38 @@
 // ROUTES (Groups)
 // ***************************************************************
 
+let groupsController = RouteController.extend({
+  onBeforeAction: function () {
+    if (!ReactionCore.hasPermission('account/profile')) {
+      this.render("layoutHeader", {
+        to: "layoutHeader"
+      });
+      this.render("layoutFooter", {
+        to: "layoutFooter"
+      });
+      this.render("unauthorized");
+    } else {
+      this.next();
+    }
+  },
+  yieldTemplates: {
+    layoutHeader: {
+      to: "layoutHeader"
+    },
+    layoutFooter: {
+      to: "layoutFooter"
+    },
+    dashboard: {
+      to: "dashboard"
+    }
+  }
+});
+
+this.groupsController = groupsController;
+
 Router.map(function() {
   this.route('groupsIndex', {
-    controller: ShopController,
+    controller: groupsController,
     template: 'groupsIndex',
     path: '/groups',
     waitOn: function () {
@@ -18,7 +47,7 @@ Router.map(function() {
   });
 
   this.route('groupShow', {
-    controller: ShopController,
+    controller: groupsController,
     template: 'groupShow',
     path: '/groups/:_id',
     waitOn: function () {
@@ -31,7 +60,7 @@ Router.map(function() {
 
   //加入group
   this.route('groupNew', {
-    controller: ShopController,
+    controller: groupsController,
     template: 'groupNew',
     path: '/groupNew',
     waitOn: function () {
@@ -43,7 +72,7 @@ Router.map(function() {
   });
 
   this.route('groupCreate', {
-    controller: ShopController,
+    controller: groupsController,
     template: 'groupCreate',
     path: '/groupCreate'
   });
