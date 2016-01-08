@@ -74,6 +74,9 @@ Router.map(function() {
   this.route('groupCreate', {
     controller: groupsController,
     template: 'groupCreate',
-    path: '/groupCreate'
+    path: '/groupCreate',
+    subscriptions: function () {
+      return [this.subscribe('authors')];
+    }
   });
 });
