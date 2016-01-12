@@ -37,7 +37,7 @@ Router.map(function() {
     template: 'groupsIndex',
     path: '/groups',
     waitOn: function () {
-      return [Meteor.subscribe('groups'), Meteor.subscribe('authors')];
+      return [Meteor.subscribe('groups'), Meteor.subscribe('authors'), Meteor.subscribe('articles')];
     },
     data: {
       groups: function () {
@@ -51,7 +51,7 @@ Router.map(function() {
     template: 'groupShow',
     path: '/groups/:_id',
     waitOn: function () {
-      return [Meteor.subscribe('group', this.params._id), Meteor.subscribe('authors')];
+      return [Meteor.subscribe('group', this.params._id), Meteor.subscribe('authors'), Meteor.subscribe('articles')];
     },
     data: function () {
       return Groups.findOne(this.params._id);
