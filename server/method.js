@@ -117,6 +117,8 @@ Meteor.methods({
     }
   },
   isInGroup: function(userId, groupId) {
+    check(userId, String);
+    check(groupId, String);
     var result = Groups.findOne({_id: groupId});
     if (!result) {
       console.log("GroupId is not exists:", groupId);
@@ -159,5 +161,9 @@ Meteor.methods({
       Groups.update(result._id, {$set:{memberIds: arrMember}});
       console.log("pop user from Group", memberId, groupId);
     }
+  },
+  groupInfo: function (groupId) {
+    check(groupId, String);
+    return Groups.findOne({_id: groupId});
   }
 });
