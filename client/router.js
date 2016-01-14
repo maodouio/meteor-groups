@@ -37,7 +37,12 @@ Router.map(function() {
     template: 'groupsIndex',
     path: '/groups',
     waitOn: function () {
-      return [Meteor.subscribe('groups'), Meteor.subscribe('authors'), Meteor.subscribe('articles'), Meteor.subscribe("Images")];
+      return [
+        Meteor.subscribe('groups'),
+        Meteor.subscribe('authors'),
+        Meteor.subscribe('articles'),
+        Meteor.subscribe("Images")
+      ];
     },
     data: {
       groups: function () {
@@ -51,7 +56,12 @@ Router.map(function() {
     template: 'groupShow',
     path: '/groups/:_id',
     waitOn: function () {
-      return [Meteor.subscribe('group', this.params._id), Meteor.subscribe('authors'), Meteor.subscribe('articles'), Meteor.subscribe("Images")];
+      return [
+        Meteor.subscribe('group', this.params._id),
+        Meteor.subscribe('authors'),
+        Meteor.subscribe('articles'),
+        Meteor.subscribe("Images")
+      ];
     },
     data: function () {
       return Groups.findOne(this.params._id);
@@ -64,7 +74,12 @@ Router.map(function() {
     template: 'groupNew',
     path: '/groupNew',
     waitOn: function () {
-      return [Meteor.subscribe('allGroups'), Meteor.subscribe("Images")];
+      return [
+        Meteor.subscribe('allGroups'),
+        Meteor.subscribe("Images"),
+        Meteor.subscribe('authors'),
+        Meteor.subscribe('articles'),
+      ];
     },
     data: function () {
       return Groups.find();
@@ -76,7 +91,28 @@ Router.map(function() {
     template: 'groupCreate',
     path: '/groupCreate',
     subscriptions: function () {
-      return [this.subscribe('authors'), Meteor.subscribe("Images")];
+      return [
+        this.subscribe('authors'),
+        Meteor.subscribe("Images"),
+        Meteor.subscribe('friends')
+      ];
+    }
+  });
+
+  this.route('groupEdit', {
+    controller: groupsController,
+    template: 'groupEdit',
+    path: '/groupEdit/:_id',
+    subscriptions: function() {
+      return [
+        Meteor.subscribe('group', this.params._id),
+        this.subscribe('authors'),
+        Meteor.subscribe("Images"),
+        Meteor.subscribe('friends')
+      ];
+    },
+    data: function () {
+      return Groups.findOne(this.params._id);
     }
   });
 });
