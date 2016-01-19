@@ -83,8 +83,9 @@ Meteor.methods({
 
   },
   removeGroup: function(groupId) {
-    console.log("removeGroup is running...");
-    var userId = Meteor.userId();
+    check(groupId, String);
+    var user = Meteor.user();
+    // var userId = Meteor.userId();
 
     // 判断群组id是否存在
     var result = Groups.findOne({_id: groupId});
@@ -94,9 +95,9 @@ Meteor.methods({
     }
 
     // 判断用户是否有删除组的权限
-    if (result.ownerId === userId) {
+    if (result.ownerId === user._id || Roles.userIsInRole(user, "admin")) {
       // remove
-      Groups.remove({_id: groupId});
+      return Groups.remove({_id: groupId});
       console.log("Remove Group:", groupId);
     } else {
       console.log("You are not this group owner:", groupId);
