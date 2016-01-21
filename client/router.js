@@ -40,7 +40,7 @@ Router.map(function() {
       return [
         Meteor.subscribe('groups'),
         Meteor.subscribe('authors'),
-        Meteor.subscribe('articles'),
+        // Meteor.subscribe('articles'),
         Meteor.subscribe("Images")
       ];
     },
