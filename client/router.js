@@ -35,10 +35,10 @@ Router.map(function() {
     path: '/groups',
     waitOn: function () {
       return [
-        Meteor.subscribe('groups'),
-        Meteor.subscribe('authors'),
-        // Meteor.subscribe('articles'),
-        Meteor.subscribe("Images")
+        ReactionCore.subsManager.subscribe('groups'),
+        ReactionCore.subsManager.subscribe('authors'),
+        // ReactionCore.subsManager.subscribe('articles'),
+        ReactionCore.subsManager.subscribe("Images")
       ];
     },
     data: {
@@ -54,10 +54,10 @@ Router.map(function() {
     path: '/groups/:_id',
     waitOn: function () {
       return [
-        Meteor.subscribe('group', this.params._id),
-        Meteor.subscribe('authors'),
-        Meteor.subscribe('articles'),
-        Meteor.subscribe("Images")
+        ReactionCore.subsManager.subscribe('group', this.params._id),
+        ReactionCore.subsManager.subscribe('authors'),
+        ReactionCore.subsManager.subscribe('articles'),
+        ReactionCore.subsManager.subscribe("Images")
       ];
     },
     data: function () {
@@ -72,10 +72,10 @@ Router.map(function() {
     path: '/groupNew',
     waitOn: function () {
       return [
-        Meteor.subscribe('allGroups'),
-        Meteor.subscribe("Images"),
-        Meteor.subscribe('authors'),
-        Meteor.subscribe('articles'),
+        ReactionCore.subsManager.subscribe('allGroups'),
+        ReactionCore.subsManager.subscribe("Images"),
+        ReactionCore.subsManager.subscribe('authors'),
+        ReactionCore.subsManager.subscribe('articles'),
       ];
     },
     data: function () {
@@ -89,9 +89,9 @@ Router.map(function() {
     path: '/groupCreate',
     subscriptions: function () {
       return [
-        this.subscribe('authors'),
-        Meteor.subscribe("Images"),
-        Meteor.subscribe('friends')
+        ReactionCore.subsManager.subscribe('authors'),
+        ReactionCore.subsManager.subscribe("Images"),
+        ReactionCore.subsManager.subscribe('friends')
       ];
     }
   });
@@ -102,10 +102,10 @@ Router.map(function() {
     path: '/groupEdit/:_id',
     subscriptions: function() {
       return [
-        Meteor.subscribe('group', this.params._id),
-        this.subscribe('authors'),
-        Meteor.subscribe("Images"),
-        Meteor.subscribe('friends')
+        ReactionCore.subsManager.subscribe('group', this.params._id),
+        ReactionCore.subsManager.subscribe('authors'),
+        ReactionCore.subsManager.subscribe("Images"),
+        ReactionCore.subsManager.subscribe('friends')
       ];
     },
     data: function () {
