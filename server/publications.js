@@ -1,7 +1,38 @@
 // GROUP INDEX
 // -------------------------------------------------------
 Meteor.publish('groups', function() {
-  return Groups.find({memberIds: {$in: [this.userId]}});
+  return Groups.find({memberIds: this.userId});
+});
+
+Meteor.publish('groupsForArticle', function(articleId) {
+  check(articleId, String);
+  let orQuery = [];
+  let article = Articles.findOne(articleId);
+  if (article) {
+    if (this.userId === article.authorId) {
+      orQuery.push({
+        "memberIds": this.userId
+      });
+    } else {
+      orQuery.push({
+        "memberIds": {
+          "$in" : [
+            this.userId,
+            article.authorId
+          ]
+        }
+      });
+    }
+
+    if (article.groupIds) {
+      orQuery.push({
+        "_id": {
+          "$in": article.groupIds
+        }
+      });
+    }
+  }
+  return Groups.find({$or: orQuery});
 });
 
 // GROUP SHOW
@@ -19,12 +50,30 @@ Meteor.publish('allGroups', function() {
 // -------------------------------------------------------
 Meteor.publish('groupAvatarId', function(id) {
   check(id, String);
-  var Media = ReactionCore.Collections.Media;
-  return Media.find({"metadata.groupAvatarId": id});
+  return Images.find({"metadata.groupAvatarId": id});
 });
 // ALL GROUPS AVATAR
 // -------------------------------------------------------
 Meteor.publish('groupsMedia', function() {
-  var Media = ReactionCore.Collections.Media;
-  return Media.find({"metadata.groupAvatarId": {$exists: true}});
+  return Images.find({"metadata.groupAvatarId": {$exists: true}});
+});
+
+Meteor.publish('groupImages', function(groupIds) {
+  check(groupIds, Array);
+  let avatarIds = [];
+  let groups = Groups.find({
+    "_id": {
+      $in: groupIds
+    }
+  }).fetch();
+
+  _.each(groups, function (group) {
+    avatarIds.push(group.avatarId);
+  });
+
+  return Images.find({
+    "metadata.groupAvatarId": {
+      $in: avatarIds
+    }
+  });
 });
