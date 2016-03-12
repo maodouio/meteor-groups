@@ -77,3 +77,25 @@ Meteor.publish('groupImages', function(groupIds) {
     }
   });
 });
+
+Meteor.publish('groups/members', function(memberIds) {
+  check(memberIds, Match.OptionalOrNull(Array));
+  if (memberIds) {
+      selector = {
+          _id: {
+              $in: memberIds
+          }
+      };
+  }
+
+  return Meteor.users.find(selector, {
+      fields: {
+          _id: 1,
+          username: 1,
+          emails: 1,
+          profile: 1
+      }
+  });
+});
+
+

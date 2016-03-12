@@ -32,20 +32,7 @@ Router.map(function() {
   this.route('groupsIndex', {
     controller: groupsController,
     template: 'groupsIndex',
-    path: '/groups',
-    waitOn: function () {
-      return [
-        ReactionCore.subsManager.subscribe('groups'),
-        ReactionCore.subsManager.subscribe('authors'),
-        // ReactionCore.subsManager.subscribe('articles'),
-        ReactionCore.subsManager.subscribe("Images")
-      ];
-    },
-    data: {
-      groups: function () {
-        return Groups.find({}, {sort: {createdAt: -1}});
-      }
-    }
+    path: '/groups'
   });
 
   this.route('groupShow', {
@@ -53,12 +40,7 @@ Router.map(function() {
     template: 'groupShow',
     path: '/groups/:_id',
     waitOn: function () {
-      return [
-        ReactionCore.subsManager.subscribe('group', this.params._id),
-        ReactionCore.subsManager.subscribe('authors'),
-        ReactionCore.subsManager.subscribe('articles'),
-        ReactionCore.subsManager.subscribe("Images")
-      ];
+      return ReactionCore.subsManager.subscribe('group', this.params._id);
     },
     data: function () {
       return Groups.findOne(this.params._id);
@@ -100,13 +82,8 @@ Router.map(function() {
     controller: groupsController,
     template: 'groupEdit',
     path: '/groupEdit/:_id',
-    subscriptions: function() {
-      return [
-        ReactionCore.subsManager.subscribe('group', this.params._id),
-        ReactionCore.subsManager.subscribe('authors'),
-        ReactionCore.subsManager.subscribe("Images"),
-        ReactionCore.subsManager.subscribe('friends')
-      ];
+    waitOn: function() {
+      return ReactionCore.subsManager.subscribe('group', this.params._id);
     },
     data: function () {
       return Groups.findOne(this.params._id);
