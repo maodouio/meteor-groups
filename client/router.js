@@ -51,31 +51,13 @@ Router.map(function() {
   this.route('groupNew', {
     controller: groupsController,
     template: 'groupNew',
-    path: '/groupNew',
-    waitOn: function () {
-      return [
-        ReactionCore.subsManager.subscribe('allGroups'),
-        ReactionCore.subsManager.subscribe("Images"),
-        ReactionCore.subsManager.subscribe('authors'),
-        ReactionCore.subsManager.subscribe('articles'),
-      ];
-    },
-    data: function () {
-      return Groups.find();
-    }
+    path: '/groupNew'
   });
 
   this.route('groupCreate', {
     controller: groupsController,
     template: 'groupCreate',
-    path: '/groupCreate',
-    subscriptions: function () {
-      return [
-        ReactionCore.subsManager.subscribe('authors'),
-        ReactionCore.subsManager.subscribe("Images"),
-        ReactionCore.subsManager.subscribe('friends')
-      ];
-    }
+    path: '/groupCreate'
   });
 
   this.route('groupEdit', {
