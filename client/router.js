@@ -70,6 +70,15 @@ Router.map(function() {
     },
     data: function () {
       return Groups.findOne(this.params._id);
+    },
+    action: function () {
+      var user = Meteor.user();
+      var group = Groups.findOne(this.params._id);
+      if (user && (Roles.userIsInRole(user, "admin") || user._id === group.ownerId)) {
+        return this.render();
+      } else {
+        return Router.go("/groups");
+      }
     }
   });
 });
